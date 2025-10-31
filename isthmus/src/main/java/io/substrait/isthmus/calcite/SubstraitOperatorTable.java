@@ -1,6 +1,7 @@
 package io.substrait.isthmus.calcite;
 
 import io.substrait.isthmus.AggregateFunctions;
+import io.substrait.isthmus.ExtendedBitwiseFunctions;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +35,10 @@ public class SubstraitOperatorTable implements SqlOperatorTable {
               AggregateFunctions.MIN,
               AggregateFunctions.AVG,
               AggregateFunctions.SUM,
-              AggregateFunctions.SUM0));
+              AggregateFunctions.SUM0,
+              ExtendedBitwiseFunctions.SHIFT_LEFT,
+              ExtendedBitwiseFunctions.SHIFT_RIGHT,
+              ExtendedBitwiseFunctions.SHIFT_RIGHT_UNSIGNED));
 
   // SQL Kinds for which Substrait specific operators are provided
   private static final Set<SqlKind> OVERRIDE_KINDS =
@@ -46,7 +50,8 @@ public class SubstraitOperatorTable implements SqlOperatorTable {
   // Utilisation of extended library operators available from calcite 1.35+, i.e hyperbolic
   // functions
   private static final SqlOperatorTable LIBRARY_OPERATOR_TABLE =
-      SqlLibraryOperatorTableFactory.INSTANCE.getOperatorTable(SqlLibrary.ALL);
+      SqlLibraryOperatorTableFactory.INSTANCE.getOperatorTable(
+          EnumSet.of(SqlLibrary.HIVE, SqlLibrary.SPARK, SqlLibrary.ALL));
 
   private static final SqlOperatorTable STANDARD_OPERATOR_TABLE = SqlStdOperatorTable.instance();
 

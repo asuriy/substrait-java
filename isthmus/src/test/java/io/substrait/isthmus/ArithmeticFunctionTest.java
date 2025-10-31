@@ -199,4 +199,32 @@ public class ArithmeticFunctionTest extends PlanTestBase {
     String query = String.format("SELECT DEGREES(%s) FROM numbers", column);
     assertFullRoundTrip(query, CREATES);
   }
+
+  @ParameterizedTest
+  @ValueSource(strings = {"i32", "i64"})
+  void factorial(String column) throws Exception {
+    String query = String.format("SELECT FACTORIAL(%s) FROM numbers", column);
+    assertFullRoundTrip(query, CREATES);
+  }
+
+  @ParameterizedTest
+  @CsvSource({"i32, i32", "i64, i32"})
+  void shift_left(String column, String mask) throws Exception {
+    String query = String.format("SELECT SHIFT_LEFT(%s, %s) FROM numbers", column, mask);
+    assertFullRoundTrip(query, CREATES);
+  }
+
+  @ParameterizedTest
+  @CsvSource({"i32, i32", "i64, i32"})
+  void shift_right(String column, String mask) throws Exception {
+    String query = String.format("SELECT SHIFT_RIGHT(%s, %s) FROM numbers", column, mask);
+    assertFullRoundTrip(query, CREATES);
+  }
+
+  @ParameterizedTest
+  @CsvSource({"i32, i32", "i64, i32"})
+  void shift_right_unsigned(String column, String mask) throws Exception {
+    String query = String.format("SELECT SHIFT_RIGHT_UNSIGNED(%s, %s) FROM numbers", column, mask);
+    assertFullRoundTrip(query, CREATES);
+  }
 }

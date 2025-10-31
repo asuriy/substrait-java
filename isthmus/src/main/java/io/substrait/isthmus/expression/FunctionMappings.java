@@ -2,6 +2,7 @@ package io.substrait.isthmus.expression;
 
 import com.google.common.collect.ImmutableList;
 import io.substrait.isthmus.AggregateFunctions;
+import io.substrait.isthmus.ExtendedBitwiseFunctions;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -77,7 +78,11 @@ public class FunctionMappings {
               s(SqlStdOperatorTable.BITAND, "bitwise_and"),
               s(SqlStdOperatorTable.BITXOR, "bitwise_xor"),
               s(SqlStdOperatorTable.RADIANS, "radians"),
-              s(SqlStdOperatorTable.DEGREES, "degrees"))
+              s(SqlStdOperatorTable.DEGREES, "degrees"),
+              s(SqlLibraryOperators.FACTORIAL, "factorial"),
+              s(ExtendedBitwiseFunctions.SHIFT_LEFT, "shift_left"),
+              s(ExtendedBitwiseFunctions.SHIFT_RIGHT, "shift_right"),
+              s(ExtendedBitwiseFunctions.SHIFT_RIGHT_UNSIGNED, "shift_right_unsigned"))
           .build();
 
   public static final ImmutableList<Sig> AGGREGATE_SIGS =
